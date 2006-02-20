@@ -1,6 +1,7 @@
 %define		_realname	fast-user-switch-applet
 
-Summary:	GNOME applet for 
+Summary:	GNOME applet for fast user switching
+Summary(pl):	Aplet GNOME do szybkiego prze³±czania u¿ytkowników
 Name:		gnome-applet-fast-user-switch
 Version:	2.13.5
 Release:	0.1
@@ -27,6 +28,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 The Fast User-Switching Applet is an applet for the GNOME panel which
 provides a menu to switch between users.
+
+%description -l pl
+Fast User-Switching Applet to aplet panelu GNOME udostêpniaj±cy menu
+do prze³±czania miêdzy u¿ytkownikami.
 
 %prep
 %setup -q -n %{_realname}-%{version}
