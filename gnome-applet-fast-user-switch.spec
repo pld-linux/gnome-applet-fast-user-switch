@@ -3,12 +3,12 @@
 Summary:	GNOME applet for fast user switching
 Summary(pl):	Aplet GNOME do szybkiego prze³±czania u¿ytkowników
 Name:		gnome-applet-fast-user-switch
-Version:	2.13.5
+Version:	2.13.91
 Release:	0.1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.13/%{_realname}-%{version}.tar.bz2
-# Source0-md5:	528fe2b5202198f0f18d00acc18cca15
+# Source0-md5:	78b685be0cfbaafdcf1feb3b6c8d1db2
 URL:		http://ignore-your.tv/fusa
 BuildRequires:	GConf2-devel
 BuildRequires:	autoconf
@@ -41,7 +41,8 @@ do prze³±czania miêdzy u¿ytkownikami.
 	--disable-schemas-install \
 	--with-gdm-setup=%{_sbindir}/gdmsetup \
 	--with-gdm-config=%{_sysconfdir}/gdm/custom.conf \
-	--with-html-dir=%{_gtkdocdir}
+	--with-html-dir=%{_gtkdocdir} \
+	--disable-scrollkeeper
 
 %{__make}
 
@@ -51,21 +52,27 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%find_lang %{_realname}
+%find_lang %{_realname} --with-gnome
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 %gconf_schema_install %{_realname}.schemas
+%scrollkeeper_update_post
 
 %preun
 %gconf_schema_uninstall %{_realname}.schemas
 
+%postun
+%scrollkeeper_update_postun
+
 %files -f %{_realname}.lang
 %defattr(644,root,root,755)
-#%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog HACKING NEWS README TODO
+%attr(755,root,root) %{_libdir}/%{_realname}
 %{_datadir}/%{_realname}
-%{_gtkdocdir}/%{_realname}
+%{_datadir}/gnome-2.0
 %{_libdir}/bonobo/servers/*.server
+%{_omf_dest_dir}/*
 %{_sysconfdir}/gconf/schemas/%{_realname}.schemas
