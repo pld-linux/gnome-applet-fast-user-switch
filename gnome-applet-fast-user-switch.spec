@@ -3,26 +3,31 @@
 Summary:	GNOME applet for fast user switching
 Summary(pl):	Aplet GNOME do szybkiego prze³±czania u¿ytkowników
 Name:		gnome-applet-fast-user-switch
-Version:	2.13.91
-Release:	0.1
+Version:	2.13.92
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.13/%{_realname}-%{version}.tar.bz2
-# Source0-md5:	78b685be0cfbaafdcf1feb3b6c8d1db2
+# Source0-md5:	b95f6b31371d27ea063d70c88316b0a9
+Patch0:		%{name}-ac.patch
 URL:		http://ignore-your.tv/fusa
 BuildRequires:	GConf2-devel
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
-BuildRequires:	gdm >= 2.13.0.8
 BuildRequires:	gettext-devel
+BuildRequires:	gnome-doc-utils
 BuildRequires:	gnome-panel-devel >= 2.10
-BuildRequires:	gnome-system-tools >= 2.13.2
+BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	intltool >= 0.33
+BuildRequires:	libglade2-devel
+BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 Requires(post,preun):	GConf2
-Requires:	gnome-panel-devel >= 2.10
-Requires:	gnome-system-tools >= 2.13.2
+Requires:	gdm
+# only required when --with-users-admin enabled
+# TODO for now
+# Requires:	gnome-system-tools >= 2.13.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -35,15 +40,20 @@ do prze³±czania miêdzy u¿ytkownikami.
 
 %prep
 %setup -q -n %{_realname}-%{version}
+%patch0 -p1
 
 %build
+gnome-doc-prepare --copy --force
+%{__libtoolize}
+%{__intltoolize}
+%{__aclocal} -I m4
+%{__automake}
+%{__autoconf}
 %configure \
 	--disable-schemas-install \
-	--with-gdm-setup=%{_sbindir}/gdmsetup \
+	--disable-scrollkeeper \
 	--with-gdm-config=%{_sysconfdir}/gdm/custom.conf \
-	--with-html-dir=%{_gtkdocdir} \
-	--disable-scrollkeeper
-
+	--with-gdm-setup=%{_sbindir}/gdmsetup
 %{__make}
 
 %install
@@ -74,5 +84,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{_realname}
 %{_datadir}/gnome-2.0
 %{_libdir}/bonobo/servers/*.server
-%{_omf_dest_dir}/*
+%{_omf_dest_dir}/%{_realname}/%{_realname}-C.omf
+%lang(es) %{_omf_dest_dir}/%{_realname}/%{_realname}-es.omf
+%lang(pa) %{_omf_dest_dir}/%{_realname}/%{_realname}-pa.omf
+%lang(sr) %{_omf_dest_dir}/%{_realname}/%{_realname}-sr.omf
 %{_sysconfdir}/gconf/schemas/%{_realname}.schemas
