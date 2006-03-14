@@ -3,12 +3,12 @@
 Summary:	GNOME applet for fast user switching
 Summary(pl):	Aplet GNOME do szybkiego prze³±czania u¿ytkowników
 Name:		gnome-applet-fast-user-switch
-Version:	2.13.92
+Version:	2.14.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.13/%{_realname}-%{version}.tar.bz2
-# Source0-md5:	b95f6b31371d27ea063d70c88316b0a9
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.14/%{_realname}-%{version}.tar.bz2
+# Source0-md5:	81eb5d66cc9f7425ba4accae2e8f3573
 Patch0:		%{name}-ac.patch
 URL:		http://ignore-your.tv/fusa
 BuildRequires:	GConf2-devel
