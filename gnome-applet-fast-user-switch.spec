@@ -16,7 +16,7 @@ BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gnome-panel-devel >= 2.10
+BuildRequires:	gnome-panel-devel >= 2.14.0
 BuildRequires:	gtk+2-devel >= 2:2.6.0
 BuildRequires:	intltool >= 0.33
 BuildRequires:	libglade2-devel
