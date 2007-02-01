@@ -1,14 +1,13 @@
 %define		_realname	fast-user-switch-applet
-
 Summary:	GNOME applet for fast user switching
 Summary(pl):	Aplet GNOME do szybkiego prze³±czania u¿ytkowników
 Name:		gnome-applet-fast-user-switch
-Version:	2.16.0
+Version:	2.16.3
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.16/%{_realname}-%{version}.tar.bz2
-# Source0-md5:	749de0f0279991515ca8d82526f5b329
+# Source0-md5:	16fe9bb182fd96ebbc65c53c5aaf6752
 Patch0:		%{name}-ac.patch
 URL:		http://ignore-your.tv/fusa
 BuildRequires:	GConf2-devel
@@ -16,9 +15,9 @@ BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gnome-panel-devel >= 2.16.0
-BuildRequires:	gtk+2-devel >= 2:2.10.3
-BuildRequires:	intltool >= 0.35
+BuildRequires:	gnome-panel-devel >= 2.16.3
+BuildRequires:	gtk+2-devel >= 2:2.10.9
+BuildRequires:	intltool >= 0.35.4
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
@@ -87,6 +86,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_omf_dest_dir}/%{_realname}
 %{_omf_dest_dir}/%{_realname}/%{_realname}-C.omf
 %lang(es) %{_omf_dest_dir}/%{_realname}/%{_realname}-es.omf
+%lang(fr) %{_omf_dest_dir}/%{_realname}/%{_realname}-fr.omf
 %lang(pa) %{_omf_dest_dir}/%{_realname}/%{_realname}-pa.omf
 %lang(sr) %{_omf_dest_dir}/%{_realname}/%{_realname}-sr.omf
 %lang(sv) %{_omf_dest_dir}/%{_realname}/%{_realname}-sv.omf
