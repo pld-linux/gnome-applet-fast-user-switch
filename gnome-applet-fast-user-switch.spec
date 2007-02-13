@@ -1,6 +1,6 @@
 %define		_realname	fast-user-switch-applet
 Summary:	GNOME applet for fast user switching
-Summary(pl.UTF-8):   Aplet GNOME do szybkiego przełączania użytkowników
+Summary(pl.UTF-8):	Aplet GNOME do szybkiego przełączania użytkowników
 Name:		gnome-applet-fast-user-switch
 Version:	2.16.3
 Release:	1
