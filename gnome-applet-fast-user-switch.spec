@@ -2,28 +2,28 @@
 Summary:	GNOME applet for fast user switching
 Summary(pl.UTF-8):	Aplet GNOME do szybkiego przełączania użytkowników
 Name:		gnome-applet-fast-user-switch
-Version:	2.16.3
+Version:	2.17.4
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.16/%{_realname}-%{version}.tar.bz2
-# Source0-md5:	16fe9bb182fd96ebbc65c53c5aaf6752
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.17/%{_realname}-%{version}.tar.bz2
+# Source0-md5:	23bd4568f7d152ec4364c41ab0e10527
 Patch0:		%{name}-ac.patch
 URL:		http://ignore-your.tv/fusa
-BuildRequires:	GConf2-devel
+BuildRequires:	GConf2-devel >= 2.18.0.1
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	gnome-doc-utils
-BuildRequires:	gnome-panel-devel >= 2.16.3
+BuildRequires:	gnome-doc-utils >= 0.9.2
+BuildRequires:	gnome-panel-devel >= 2.17.92
 BuildRequires:	gtk+2-devel >= 2:2.10.9
-BuildRequires:	intltool >= 0.35.4
+BuildRequires:	intltool >= 0.35.5
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 Requires(post,preun):	GConf2
-Requires:	gdm >= 1:2.16.0
+Requires:	gdm >= 1:2.17.8
 # only required when --with-users-admin enabled
 # TODO for now
 # Requires:	gnome-system-tools >= 2.13.2
@@ -85,6 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/bonobo/servers/*.server
 %dir %{_omf_dest_dir}/%{_realname}
 %{_omf_dest_dir}/%{_realname}/%{_realname}-C.omf
+%lang(en_GB) %{_omf_dest_dir}/%{_realname}/%{_realname}-en_GB.omf
 %lang(es) %{_omf_dest_dir}/%{_realname}/%{_realname}-es.omf
 %lang(fr) %{_omf_dest_dir}/%{_realname}/%{_realname}-fr.omf
 %lang(pa) %{_omf_dest_dir}/%{_realname}/%{_realname}-pa.omf
