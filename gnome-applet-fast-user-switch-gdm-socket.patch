@@ -1,0 +1,12 @@
+diff -urN fast-user-switch-applet-2.20.0/src/gdm-queue.c fast-user-switch-applet-2.20.0.new/src/gdm-queue.c
+--- fast-user-switch-applet-2.20.0/src/gdm-queue.c	2007-09-18 15:33:33.000000000 +0200
++++ fast-user-switch-applet-2.20.0.new/src/gdm-queue.c	2007-11-30 15:37:34.000000000 +0100
+@@ -237,7 +237,7 @@
+ 
+         if (stat (GDM_NEW_SOCKET_FILENAME, &file_stat) == 0)
+           strcpy (addr.sun_path, GDM_NEW_SOCKET_FILENAME);
+-        if (stat (GDM_OLD_SOCKET_FILENAME, &file_stat) == 0)
++        else if (stat (GDM_OLD_SOCKET_FILENAME, &file_stat) == 0)
+           strcpy (addr.sun_path, GDM_OLD_SOCKET_FILENAME);
+         else
+           g_error ("Can't find gdm socket!");
