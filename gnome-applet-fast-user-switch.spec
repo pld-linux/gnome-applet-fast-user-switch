@@ -3,30 +3,32 @@ Summary:	GNOME applet for fast user switching
 Summary(pl.UTF-8):	Aplet GNOME do szybkiego przełączania użytkowników
 Name:		gnome-applet-fast-user-switch
 Version:	2.20.0
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.20/%{_realname}-%{version}.tar.bz2
 # Source0-md5:	1d1fd25b5599f7656e3fa89aa913137c
 Patch0:		%{name}-ac.patch
+Patch1:		%{name}-gdm-socket.patch
 URL:		http://ignore-your.tv/fusa
-BuildRequires:	GConf2-devel >= 2.18.0.1
+BuildRequires:	GConf2-devel >= 2.20.0
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	gnome-doc-utils >= 0.10.1
+BuildRequires:	gnome-doc-utils >= 0.12.0
 BuildRequires:	gnome-panel-devel >= 2.20.0
 BuildRequires:	gtk+2-devel >= 2:2.12.0
 BuildRequires:	intltool >= 0.35.5
-BuildRequires:	libglade2-devel >= 1:2.6.0
+BuildRequires:	libglade2-devel >= 1:2.6.2
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.197
+BuildRequires:	rpmbuild(find_lang) >= 1.23
+BuildRequires:	rpmbuild(macros) >= 1.311
+BuildRequires:	sed >= 4.0
 Requires(post,preun):	GConf2
+Requires(post,postun):	scrollkeeper
 Requires:	gdm >= 1:2.20.0
-# only required when --with-users-admin enabled
-# TODO for now
-# Requires:	gnome-system-tools >= 2.13.2
+Suggests:	gnome-system-tools >= 2.20.0
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -42,9 +44,13 @@ do przełączania między użytkownikami.
 %prep
 %setup -q -n %{_realname}-%{version}
 %patch0 -p1
+%patch1 -p1
+
+sed -i -e 's#sr\@Latn#sr\@latin#' po/LINGUAS
+mv po/sr\@{Latn,latin}.po
 
 %build
-gnome-doc-prepare --copy --force
+%{__gnome_doc_prepare}
 %{__libtoolize}
 %{__intltoolize}
 %{__aclocal} -I m4
@@ -54,7 +60,8 @@ gnome-doc-prepare --copy --force
 	--disable-schemas-install \
 	--disable-scrollkeeper \
 	--with-gdm-config=%{_sysconfdir}/gdm/custom.conf \
-	--with-gdm-setup=%{_sbindir}/gdmsetup
+	--with-gdm-setup=%{_sbindir}/gdmsetup \
+	--with-users-admin=/usr/bin/users-admin
 %{__make}
 
 %install
@@ -63,9 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-[ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
-	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
-%find_lang %{_realname} --with-gnome
+%find_lang %{_realname} --with-gnome --with-omf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -85,14 +90,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog HACKING NEWS README TODO
 %attr(755,root,root) %{_libdir}/%{_realname}
 %{_datadir}/%{_realname}
-%{_datadir}/gnome-2.0
+%{_datadir}/gnome-2.0/ui/GNOME_FastUserSwitchApplet.xml
 %{_libdir}/bonobo/servers/*.server
-%dir %{_omf_dest_dir}/%{_realname}
-%{_omf_dest_dir}/%{_realname}/%{_realname}-C.omf
-%lang(en_GB) %{_omf_dest_dir}/%{_realname}/%{_realname}-en_GB.omf
-%lang(es) %{_omf_dest_dir}/%{_realname}/%{_realname}-es.omf
-%lang(fr) %{_omf_dest_dir}/%{_realname}/%{_realname}-fr.omf
-%lang(pa) %{_omf_dest_dir}/%{_realname}/%{_realname}-pa.omf
-%lang(sr) %{_omf_dest_dir}/%{_realname}/%{_realname}-sr.omf
-%lang(sv) %{_omf_dest_dir}/%{_realname}/%{_realname}-sv.omf
 %{_sysconfdir}/gconf/schemas/%{_realname}.schemas
