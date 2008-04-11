@@ -2,14 +2,13 @@
 Summary:	GNOME applet for fast user switching
 Summary(pl.UTF-8):	Aplet GNOME do szybkiego przełączania użytkowników
 Name:		gnome-applet-fast-user-switch
-Version:	2.20.0
-Release:	3
+Version:	2.22.0
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.20/%{_realname}-%{version}.tar.bz2
-# Source0-md5:	1d1fd25b5599f7656e3fa89aa913137c
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.22/%{_realname}-%{version}.tar.bz2
+# Source0-md5:	540f2567582e77cdd673dde3546b61db
 Patch0:		%{name}-ac.patch
-Patch1:		%{name}-gdm-socket.patch
 URL:		http://ignore-your.tv/fusa
 BuildRequires:	GConf2-devel >= 2.20.0
 BuildRequires:	autoconf >= 2.53
@@ -44,7 +43,6 @@ do przełączania między użytkownikami.
 %prep
 %setup -q -n %{_realname}-%{version}
 %patch0 -p1
-%patch1 -p1
 
 sed -i -e 's#sr\@Latn#sr\@latin#' po/LINGUAS
 mv po/sr\@{Latn,latin}.po
