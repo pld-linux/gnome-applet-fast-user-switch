@@ -46,6 +46,9 @@ do przełączania między użytkownikami.
 
 sed -i -e 's#sr\@Latn#sr\@latin#' po/LINGUAS
 mv po/sr\@{Latn,latin}.po
+# Pashto not yet supported by (our?) libc
+%{__sed} -i -e 's#ps##' po/LINGUAS
+rm -rf po/ps
 
 %build
 %{__gnome_doc_prepare}
