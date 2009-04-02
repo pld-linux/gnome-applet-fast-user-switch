@@ -2,30 +2,33 @@
 Summary:	GNOME applet for fast user switching
 Summary(pl.UTF-8):	Aplet GNOME do szybkiego przełączania użytkowników
 Name:		gnome-applet-fast-user-switch
-Version:	2.22.0
+Version:	2.24.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.22/%{_realname}-%{version}.tar.bz2
-# Source0-md5:	540f2567582e77cdd673dde3546b61db
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/fast-user-switch-applet/2.24/%{_realname}-%{version}.tar.bz2
+# Source0-md5:	001ef5a6a03ba6a0f4857bc3b05ec8f1
 Patch0:		%{name}-ac.patch
+Patch1:		%{name}-build.patch
 URL:		http://ignore-your.tv/fusa
 BuildRequires:	GConf2-devel >= 2.20.0
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	gettext-devel
+BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-doc-utils >= 0.12.0
 BuildRequires:	gnome-panel-devel >= 2.20.0
-BuildRequires:	gtk+2-devel >= 2:2.12.0
+BuildRequires:	gtk+2-devel >= 2:2.16.0
 BuildRequires:	intltool >= 0.35.5
 BuildRequires:	libglade2-devel >= 1:2.6.2
+BuildRequires:	libgnomeui-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
-BuildRequires:	sed >= 4.0
-Requires(post,preun):	GConf2
+BuildRequires:	xorg-lib-libXmu-devel
 Requires(post,postun):	scrollkeeper
+Requires(post,preun):	GConf2
 Requires:	gdm >= 1:2.20.0
 Suggests:	gnome-system-tools >= 2.20.0
 # sr@Latn vs. sr@latin
@@ -43,12 +46,7 @@ do przełączania między użytkownikami.
 %prep
 %setup -q -n %{_realname}-%{version}
 %patch0 -p1
-
-sed -i -e 's#sr\@Latn#sr\@latin#' po/LINGUAS
-mv po/sr\@{Latn,latin}.po
-# Pashto not yet supported by (our?) libc
-%{__sed} -i -e 's#ps##' po/LINGUAS
-rm -rf po/ps
+%patch1 -p1
 
 %build
 %{__gnome_doc_prepare}
@@ -63,6 +61,7 @@ rm -rf po/ps
 	--with-gdm-config=%{_sysconfdir}/gdm/custom.conf \
 	--with-gdm-setup=%{_sbindir}/gdmsetup \
 	--with-users-admin=/usr/bin/users-admin
+
 %{__make}
 
 %install
