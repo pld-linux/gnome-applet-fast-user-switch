@@ -14,6 +14,7 @@ URL:		http://ignore-your.tv/fusa
 BuildRequires:	GConf2-devel >= 2.20.0
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
+BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-doc-utils >= 0.12.0
