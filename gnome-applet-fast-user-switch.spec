@@ -46,8 +46,8 @@ do przełączania między użytkownikami.
 
 %prep
 %setup -q -n %{_realname}-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch -P0 -p1
+%patch -P1 -p1
 
 %build
 %{__gnome_doc_prepare}
